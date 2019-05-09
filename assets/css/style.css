@@ -37,15 +37,15 @@ h3 {
     background-color: rgba(135, 206, 250, .5);
     width: 100%;
     margin: auto;
-    padding: 50px;
+    padding: 50px 25px;
     box-sizing: border-box;
 }
 
 .character {
  display: inline-block;
- height: 175px;
- width: 125px;
- margin: 5px;
+ height: 230px;
+ width: 160px;
+ margin-right: 5px;
 }
 
 .character img {
@@ -73,8 +73,8 @@ button {
     padding: 2px 10px;
 }
 
-#user-character,
-#defender {
+#user-display,
+#defender-display {
     background-color: rgba(128,128,128, .5);
     float: left;
     border-radius: 5%;
@@ -85,7 +85,7 @@ button {
 }
 
 #enemies img {
-    height: 150px;
+    height: 125px;
     display: inline-block;
 }
 
