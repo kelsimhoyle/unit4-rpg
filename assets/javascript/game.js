@@ -51,55 +51,11 @@ function createCharacters() {
     }
 }
 
-function fight() {
-    // values needed in order to play
-    var userName = $(".user").attr("id");
-    var defenderName = $(".defender").attr("id");
-    var userHP = parseInt($(".user").attr("data-hp"));
-    var attack = parseInt($(".user").attr("data-attack"));
-    var defenderHP = parseInt($(".defender").attr("data-hp"));
-    var counterAttack = parseInt($(".defender").attr("data-counterattack"));
-    var messages = [
-        {
-            attackMessage: userName + " quickly attacked " +  defenderName + " with " + attack + " damage. " + defenderName + " has " + defenderHP + " left.",
-            counterMessage: defenderName + " fought back and caused " + counterAttack + " damage on " + userName + ". Leaving " + userName + " with " + userHP + " HP left."
-        },
-        {
-            attackMessage: userName + " has launched an attack! " + defenderName + " has sustained " + attack + " damage and has " + defenderHP + " HP remaining.",
-            counterMessage: defenderName + " quickly attacked back and caused " + counterAttack + " damage. " + userName + " has " + userHP + " remaining."
-        }
-    ]
-    
-    function randomAttack() {
-        return messages[Math.floor(Math.random() * messages.length)].attackMessage;
-    }
-
-    function randomCounter() {
-        return messages[Math.floor(Math.random() * messages.length)].counterMessage;
-    }
-    var roundText = $("<div>").addClass("round-text");
-    var attackText = $("<p>").addClass("attack-text");
-    var counterText = $("<p>").addClass("counter-text");
-
-    $("#attack").on("click", function() {
-        $("#messages").empty();
-        defenderHP -= attack;
-        attack += 5;
-        userHP -= counterAttack;
-        attackText.text(randomAttack());
-        counterText.text(randomCounter());
-        roundText.append(attackText).append(counterText);
-        $("#messages").append(roundText);
-
-    });
-}
-
 
 function playGame() {
     $("#enemies").hide();
     $(".playing").hide();
     createCharacters();
-
 
     // When a character is clicked, then we will chose it to play
     $(".character").on("click", function () {
@@ -123,11 +79,71 @@ function playGame() {
             fight();
         }
     });
-    
-
-
-
-
 }
+
+
+function fight() {
+    // values needed in order to play
+    var userName = $(".user").attr("id");
+    var defenderName = $(".defender").attr("id");
+    var userHP = parseInt($(".user").attr("data-hp"));
+    var attack = parseInt($(".user").attr("data-attack"));
+    var defenderHP = parseInt($(".defender").attr("data-hp"));
+    var counterAttack = parseInt($(".defender").attr("data-counterattack"));
+    var fightOver = false;
+
+
+    var roundText = $("<div>").addClass("round-text");
+    var attackText = $("<p>").addClass("attack-text");
+    var counterText = $("<p>").addClass("counter-text");
+
+    $("#attack").on("click", function () {
+         var messages = [
+            {
+                attackMessage: userName + " quickly attacked " + defenderName + " with " + attack + " damage. " + defenderName + " has " + defenderHP + " left.",
+                counterMessage: defenderName + " fought back and caused " + counterAttack + " damage on " + userName + ". Leaving " + userName + " with " + userHP + " HP left."
+            },
+            {
+                attackMessage: userName + " has launched an attack! " + defenderName + " has sustained " + attack + " damage and has " + defenderHP + " HP remaining.",
+                counterMessage: defenderName + " quickly attacked back and caused " + counterAttack + " damage. " + userName + " has " + userHP + " remaining."
+            }
+        ]
+
+        function randomAttack() {
+            return messages[Math.floor(Math.random() * messages.length)].attackMessage;
+        }
+
+        function randomCounter() {
+            return messages[Math.floor(Math.random() * messages.length)].counterMessage;
+        }
+
+        if (fightOver) return;
+
+        $("#messages").empty();
+        defenderHP -= attack;
+        attack += 5;
+        userHP -= counterAttack;
+        attackText.text(randomAttack());
+        counterText.text(randomCounter());
+        roundText.append(attackText).append(counterText);
+        $("#messages").append(roundText);
+
+        if (userHP <= 0) {
+            fightOver = true;
+            var lostMessage = $("<p>").text("You lost. Try again?");
+            var playAgain = $("<button>").text("Play Again")
+            playAgain.on("click", function () {
+                playGame();
+            });
+            $("#messages").append(lostMessage).append(playAgain);
+        } else if (defenderHP <= 0) {
+            fightOver = true;
+            var winMessage = $("<p>").text("You Win! Choose your next opponent...");
+            $("#messages").append(winMessage);
+        }
+
+    });
+}
+
 
 playGame();
