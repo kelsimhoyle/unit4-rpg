@@ -1,6 +1,6 @@
 var isCharacterChosen = false;
 var isDefenderChosen = false;
-var opponents = [];
+var enemiesDefeated = 0;
 var characters = [
     {
         name: "Finn",
@@ -68,7 +68,7 @@ function choseCharacters() {
             $(this).addClass("selected user");
             $("#user-display").append(this);
         }
-        
+
         if (isCharacterChosen && isDefenderChosen) {
             $(".character").not(".selected").appendTo("#enemies");
             $("#enemies").show();
@@ -102,9 +102,14 @@ function fight() {
     var attackText = $("<p>").addClass("attack-text");
     var counterText = $("<p>").addClass("counter-text");
 
+    $("#messages").empty();
+    $("#attack").show();
+
     $("#attack").on("click", function () {
 
-         var messages = [
+
+
+        var messages = [
             {
                 attackMessage: userName + " quickly attacked " + defenderName + " with " + attack + " damage. ",
                 counterMessage: defenderName + " fought back and caused " + counterAttack + " damage."
@@ -114,8 +119,13 @@ function fight() {
                 counterMessage: defenderName + " quickly attacked back and caused " + counterAttack + " damage. "
             }
         ]
+        var playAgain =$("<button>").text("Play Again");
+        playAgain.on("click", function () {
+            playGame();
+        });
 
-        function randomAttack() { 
+
+        function randomAttack() {
             return messages[Math.floor(Math.random() * messages.length)].attackMessage;
         }
 
@@ -130,20 +140,27 @@ function fight() {
             fightOver = true;
             $("#messages").empty();
             var lostMessage = $("<p>").text("You lost. Try again?");
-            var playAgain = $("<button>").text("Play Again")
-            playAgain.on("click", function () {
-                playGame();
-            });
+
             $("#messages").append(lostMessage).append(playAgain);
-        } else if (defenderHP <= 0) {
+        } 
+        else if (defenderHP <= 0) {
             fightOver = true;
+            enemiesDefeated++;
             $("#messages").empty();
-            var winMessage = $("<p>").text("You Win! Choose your next opponent...");
+            $("#attack").hide();
+            var winMessage = $("<p>")
             var nextOpponent = $("<button>").text("Let's Do This!!");
-            nextOpponent.on("click", function() {
+            nextOpponent.on("click", function () {
                 chooseNextOpponent();
             });
-            $("#messages").append(winMessage).append(nextOpponent);
+            if (enemiesDefeated == 3) {
+                winMessage.text("Congratulations! You defeated all of your enemies!!");
+                $("#messages").append(playAgain);
+            } else {
+            winMessage.text("You Win! Choose your next opponent...");
+            $("#messages").append(nextOpponent);
+            }
+            $("#messages").prepend(winMessage);
         } else {
             $("#messages").empty();
             defenderHP -= attack;
@@ -166,9 +183,18 @@ function chooseNextOpponent() {
     $("#attack").hide();
     var instructions = $("<h2>").text("Click your next opponent to enter the arena. Good luck!");
     $("#messages").append(instructions);
-    choseCharacters();
-
-    
+    $(".character").on("click", function () {
+        if (isDefenderChosen) {
+            return;
+        }
+        else {
+            isDefenderChosen = true;
+            this.chosen = true;
+            $(this).addClass("selected defender");
+            $("#defender-display").append(this);
+            fight();
+        }
+    });
 }
 
 playGame();
