@@ -11,20 +11,20 @@ var characters = [
         counterAttack: 6 //never changes
     },
     {
+        name: "Princess Bubblegum",
+        src: "assets/images/bubblegum.png",
+        chosen: false,
+        attack: 6,
+        HP: 90,
+        counterAttack: 4
+    },
+    {
         name: "Jake",
         src: "assets/images/jake.png",
         chosen: false,
         attack: 10,
         HP: 120,
         counterAttack: 8
-    },
-    {
-        name: "Lumpy Space Princess",
-        src: "assets/images/lsp.png",
-        chosen: false,
-        attack: 6,
-        HP: 90,
-        counterAttack: 4
     },
     {
         name: "Marceline the Vampire Queen",
@@ -48,18 +48,37 @@ function createCharacters() {
     }
 }
 
-createCharacters();
 
-// When a character is clicked, then we will chose it to play
-$(".character").on("click", function () {
-    if (isCharacterChosen && isDefenderChosen) return;
+function playGame() {
+    $("#enemies").hide();
+    $(".playing").hide();
+    createCharacters();
 
-    if (isCharacterChosen) {
-        isDefenderChosen = true;
-        $("#defender").append(this);
-    } else {
-        this.chosen = true;
-        isCharacterChosen = true;
-        $("#user-character").append(this);
-    }
-});
+
+    // When a character is clicked, then we will chose it to play
+    $(".character").on("click", function () {
+        if (isCharacterChosen && isDefenderChosen) return;
+
+        if (isCharacterChosen) {
+            isDefenderChosen = true;
+            this.chosen = true;
+            $(this).addClass("selected");
+            $("#defender").append(this);
+        } else {
+            this.chosen = true;
+            isCharacterChosen = true;
+            $(this).addClass("selected");
+            $("#user-character").append(this);
+        }
+        if (isCharacterChosen && isDefenderChosen) {
+            $(".character").not(".selected").appendTo("#enemies");
+            $("#enemies").show();
+            $(".playing").show();
+        }
+    });
+    
+    
+
+}
+
+playGame();

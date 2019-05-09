@@ -4,31 +4,89 @@ body {
     background-size: 100vw;
     width: 85%;
     margin: auto;
+    font-family: 'Lato', sans-serif;
     text-align: center;
 }
 
+h1,
+h3 {
+    font-family: 'Kalam', cursive;
+}
+
+h1 {
+    font-size: 30px;
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+h3 {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+
 .game {
-    background-color: rgba(128,128,128, .5);
-    height: 80vh;
+    background-color: rgba(135, 206, 250, .5);
     width: 100%;
     margin: auto;
+    padding: 50px;
+    box-sizing: border-box;
 }
 
 .character {
  display: inline-block;
+ height: 175px;
+ width: 125px;
+ margin: 5px;
 }
 
 .character img {
-    height: 250px;
+    height: 150px;
     width: auto;
+    padding: 10px;
 }
-
-#user-character {
-    float: left;
-}
-
-#defender {
+/* where messages pop up/the fight button */
+.fighting {
     float: right;
+}
+
+.playing {
+    height: 175px;
+}
+
+#messages {
+    height: 100px;
+}
+
+button {
+    font-family: 'Kalam', cursive;
+    font-size: 20px;
+    letter-spacing: 2px;
+    padding: 2px 10px;
+}
+
+#user-character,
+#defender {
+    background-color: rgba(128,128,128, .5);
+    float: left;
+    border-radius: 5%;
+    width: 200px;
+    height: 315px;
+    padding: 10px;
+    margin: 10px;
+}
+
+#enemies img {
+    height: 150px;
+    display: inline-block;
 }
 
 
