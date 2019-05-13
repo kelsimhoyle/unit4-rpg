@@ -2,12 +2,8 @@ body {
     background-image: url("../images/background.jpg");
     background-repeat: no-repeat;
     background-size: 100vw;
-    width: 85%;
-    margin: auto;
-    font-family: 'Lato', sans-serif;
-    text-align: center;
-}
-h1,
+    margin: 20px;
+} h1,
 h2
  {
     color: 	
@@ -16,7 +12,6 @@ h2
 
 h1 {
     font-size: 30px;
-    font-family: 'Kalam', cursive;
 }
 
 h2 {
@@ -39,66 +34,14 @@ p {
     font-weight: bold;
 }
 
-.clearfix::after {
-    content: "";
-    clear: both;
-    display: table;
-  }
-
 .game {
     background-color: rgba(240,193,48, .5);
-    width: 100%;
-    margin: auto;
-    margin-top: 5%;
-    padding: 50px 25px;
-    box-sizing: border-box;
-    border-radius: 5%;
-}
+} 
 
-.character {
- display: inline-block;
- height: 230px;
- width: 160px;
- margin-right: 5px;
-}
+
 
 .character img {
-    height: 150px;
-    width: auto;
-    padding: 10px;
+    width: 95%;
+    height: auto;
 }
-/* where messages pop up/the fight button */
-.fighting {
-    float: right;
-}
-
-#messages {
-    height: 100px;
-    margin: 15px;
-}
-
-button {
-    font-family: 'Kalam', cursive;
-    font-size: 20px;
-    letter-spacing: 2px;
-    padding: 2px 10px;
-    margin: 5pxl
-}
-
-#user-display,
-#defender-display {
-    background-color: rgba(128,128,128, .4);
-    float: left;
-    border-radius: 5%;
-    width: 200px;
-    height: 315px;
-    padding: 10px;
-    margin: 10px;
-}
-
-#enemies img {
-    height: 125px;
-    display: inline-block;
-}
-
 
